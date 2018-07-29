@@ -15,8 +15,10 @@ class App extends React.Component {
     let searchTerm = event.target.value;
     let result = [];
     for (let i = 0; i < foods.length; i++) {
-      if(foods[i].name.toUpperCase().indexOf(searchTerm.toUpperCase()) !== -1){
-        result.push(foods[i])
+      if (
+        foods[i].name.toUpperCase().indexOf(searchTerm.toUpperCase()) !== -1
+      ) {
+        result.push(foods[i]);
       }
       this.setState({
         query: event.target.value,
@@ -25,11 +27,22 @@ class App extends React.Component {
     }
   }
 
+  addFood(i) {
+    let addFood = this.state.actualFood.slice();
+    addFood[i].quantity++;
+    this.setState({
+      actualFood: addFood
+    });
+  }
+
   render() {
     return (
       <div>
-      <input type="text" value={this.state.value} onChange={this.handleChange} />
-
+        <input
+          type="text"
+          value={this.state.value}
+          onChange={this.handleChange}
+        />
         {this.state.actualFood.map((food, i) => (
           <div key={i} id={i} className="box">
             <article className="media">
@@ -49,10 +62,19 @@ class App extends React.Component {
               <div className="media-right">
                 <div className="field has-addons">
                   <div className="control">
-                    <input className="input" type="number" value="1" />
+                    <input
+                      className="input"
+                      type="number"
+                      value={food.quantity}
+                    />
                   </div>
                   <div className="control">
-                    <button className="button is-info">+</button>
+                    <button
+                      className="button is-info"
+                      onClick={() => this.addFood(i)}
+                    >
+                      +
+                    </button>
                   </div>
                 </div>
               </div>
